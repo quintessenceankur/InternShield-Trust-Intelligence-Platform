@@ -1,0 +1,3570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERNSHIELD | Trust Intelligence Platform V2.2 (Fusion Force Upgrade)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           INTERNSHIELD DESIGN SYSTEM - CORE VARIABLES
+           ========================================================================== */
+        :root {
+            /* COLOR PALETTE - NEON CYBERPUNK */
+            --color-bg-deep: #05050A;
+            --color-bg-panel: rgba(10, 10, 18, 0.65);
+            --color-bg-glass: rgba(255, 255, 255, 0.03);
+            
+            --color-neon-purple: #B026FF;
+            --color-neon-purple-dim: rgba(176, 38, 255, 0.1);
+            --color-neon-purple-glow: rgba(176, 38, 255, 0.6);
+
+            --color-electric-blue: #00F0FF;
+            --color-electric-blue-dim: rgba(0, 240, 255, 0.1);
+            --color-electric-blue-glow: rgba(0, 240, 255, 0.6);
+
+            --color-teal-glow: #00FFC2;
+            --color-pink-highlight: #FF007F;
+            
+            --color-warning-red: #FF3366;
+            --color-warning-red-dim: rgba(255, 51, 102, 0.1);
+            
+            --color-trust-green: #00FF66;
+            --color-trust-green-dim: rgba(0, 255, 102, 0.1);
+
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #A0A0B0;
+            --color-text-muted: #666677;
+
+            /* TYPOGRAPHY */
+            --font-display: 'Orbitron', sans-serif;
+            --font-header: 'Rajdhani', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-code: 'Space Mono', monospace;
+
+            /* UI EFFECTS */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px);
+            
+            --shadow-neon-blue: 0 0 15px rgba(0, 240, 255, 0.3), 0 0 30px rgba(0, 240, 255, 0.1);
+            --shadow-neon-purple: 0 0 15px rgba(176, 38, 255, 0.3), 0 0 30px rgba(176, 38, 255, 0.1);
+            --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+            --transition-fast: all 0.2s ease;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            
+            /* NEW VARIABLES FOR READINESS ENGINE */
+            --color-brutal-orange: #FF5E00;
+            --color-brutal-yellow: #FFD600;
+            --color-elite-cyan: #00FFFF;
+
+            /* NEW VARIABLES FOR REALITY CHECK ENGINE */
+            --color-reality-magenta: #FF00FF;
+            --color-reality-cyan: #00E5FF;
+            --color-reality-bg: rgba(20, 20, 30, 0.8);
+        }
+
+        /* ==========================================================================
+           GLOBAL RESET & BASE STYLES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-electric-blue) var(--color-bg-deep);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-bg-deep);
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* CUSTOM SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-deep);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-neon-purple);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-electric-blue);
+        }
+
+        /* HEADINGS */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-header);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--color-text-secondary);
+        }
+
+        a {
+            color: var(--color-electric-blue);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        a:hover {
+            text-shadow: 0 0 8px var(--color-electric-blue);
+        }
+
+        /* ==========================================================================
+           BACKGROUND EFFECTS
+           ========================================================================== */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at center, #0a0a16 0%, #000000 100%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            perspective: 1000px;
+            transform: rotateX(60deg) translateY(-100px) scale(2);
+            transform-origin: top center;
+            opacity: 0.4;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+
+        /* ==========================================================================
+           LAYOUT CONTAINER
+           ========================================================================== */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            min-height: 100vh;
+        }
+
+        /* ==========================================================================
+           NAVIGATION COMPONENT
+           ========================================================================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 10, 0.85);
+            backdrop-filter: var(--glass-blur);
+            border-bottom: var(--glass-border);
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .logo svg {
+            width: 35px;
+            height: 35px;
+            fill: var(--color-electric-blue);
+            filter: drop-shadow(0 0 8px var(--color-electric-blue));
+            animation: pulseLogo 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseLogo {
+            0% { filter: drop-shadow(0 0 5px var(--color-electric-blue)); }
+            50% { filter: drop-shadow(0 0 15px var(--color-electric-blue)); }
+            100% { filter: drop-shadow(0 0 5px var(--color-electric-blue)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-family: var(--font-header);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            color: var(--color-electric-blue);
+            text-shadow: 0 0 8px var(--color-electric-blue);
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--color-electric-blue);
+            transition: var(--transition-smooth);
+            box-shadow: 0 0 10px var(--color-electric-blue);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        /* Nav Profile Section */
+        .nav-profile-area {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+        }
+
+        .user-name {
+            color: var(--color-electric-blue);
+            font-weight: bold;
+        }
+
+        .user-role {
+            color: var(--color-text-muted);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           BUTTON SYSTEM
+           ========================================================================== */
+        .btn {
+            padding: 0.8rem 2rem;
+            font-family: var(--font-header);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            outline: none;
+        }
+
+        /* PRIMARY BUTTON (CYBER BLUE) */
+        .btn-primary {
+            background: transparent;
+            color: var(--color-electric-blue);
+            border: 1px solid var(--color-electric-blue);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.4), transparent);
+            transition: var(--transition-smooth);
+            z-index: 0;
+        }
+
+        .btn-primary:hover {
+            background: rgba(0, 240, 255, 0.15);
+            box-shadow: var(--shadow-neon-blue);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+            transition: 0.6s ease;
+        }
+
+        /* SECONDARY BUTTON (NEON PURPLE) */
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-neon-purple);
+            border: 1px solid var(--color-neon-purple);
+            box-shadow: 0 0 10px rgba(176, 38, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(176, 38, 255, 0.15);
+            box-shadow: var(--shadow-neon-purple);
+            transform: translateY(-2px);
+        }
+
+        /* DANGER BUTTON (RED) */
+        .btn-danger {
+            background: rgba(255, 51, 102, 0.1);
+            color: var(--color-warning-red);
+            border: 1px solid var(--color-warning-red);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 51, 102, 0.3);
+            box-shadow: 0 0 15px var(--color-warning-red);
+        }
+
+        /* SUCCESS BUTTON (GREEN) */
+        .btn-success {
+            background: rgba(0, 255, 102, 0.1);
+            color: var(--color-trust-green);
+            border: 1px solid var(--color-trust-green);
+        }
+
+        .btn-success:hover {
+            background: rgba(0, 255, 102, 0.3);
+            box-shadow: 0 0 15px var(--color-trust-green);
+        }
+
+        /* SMALL BUTTON VARIANT */
+        .btn-sm {
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        #hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 650px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--color-electric-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: var(--color-electric-blue);
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--color-electric-blue) 50%, var(--color-neon-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.2));
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            border-left: 4px solid var(--color-neon-purple);
+            padding-left: 1.5rem;
+            max-width: 500px;
+        }
+
+        .hero-visual {
+            flex: 1;
+            height: 600px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+        }
+
+        .shield-3d-container {
+            width: 350px;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatShield 6s ease-in-out infinite;
+        }
+
+        .shield-glass {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 20, 0.4);
+            border: 2px solid var(--color-electric-blue);
+            border-radius: 20px;
+            backdrop-filter: var(--glass-blur);
+            box-shadow: inset 0 0 50px rgba(0, 240, 255, 0.2), 0 0 50px rgba(0, 240, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .shield-glass::before {
+            content: '';
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            background: conic-gradient(from 0deg, transparent 0 340deg, var(--color-neon-purple) 360deg);
+            animation: spinRing 4s linear infinite;
+            z-index: -1;
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        .shield-score-display {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            color: var(--color-trust-green);
+            text-shadow: 0 0 25px var(--color-trust-green);
+            line-height: 1;
+        }
+
+        .shield-label {
+            font-family: var(--font-header);
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: #fff;
+            margin-top: 15px;
+            text-transform: uppercase;
+        }
+
+        @keyframes floatShield {
+            0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(-5deg); }
+            50% { transform: translateY(-30px) rotateX(10deg) rotateY(5deg); }
+        }
+
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==========================================================================
+           SECTION STYLING
+           ========================================================================== */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: #fff;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: var(--color-electric-blue);
+            box-shadow: 0 0 20px var(--color-electric-blue);
+        }
+
+        /* ==========================================================================
+           CARDS & GRIDS
+           ========================================================================== */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--color-bg-panel);
+            border: var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: var(--glass-blur);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Internship Specific Card Styling */
+        .intern-card {
+            background: linear-gradient(145deg, rgba(15, 15, 25, 0.95), rgba(5, 5, 10, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 300px;
+        }
+
+        .intern-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--color-electric-blue), var(--color-neon-purple));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: var(--transition-smooth);
+            pointer-events: none;
+        }
+
+        .intern-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-logo-placeholder {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            color: #000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            font-family: var(--font-header);
+        }
+
+        .trust-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid currentColor;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge-safe {
+            color: var(--color-trust-green);
+            background: var(--color-trust-green-dim);
+            box-shadow: 0 0 10px var(--color-trust-green-dim);
+        }
+
+        .badge-warning {
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
+        }
+
+        .badge-danger {
+            color: var(--color-warning-red);
+            background: var(--color-warning-red-dim);
+            box-shadow: 0 0 10px var(--color-warning-red-dim);
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .company-name {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .verified-tick {
+            width: 16px;
+            height: 16px;
+            fill: var(--color-electric-blue);
+        }
+
+        .card-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-box {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-family: var(--font-code);
+            font-size: 1.1rem;
+            color: var(--color-electric-blue);
+            font-weight: bold;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .card-actions {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* ==========================================================================
+           MODALS & OVERLAYS
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-container {
+            background: var(--color-bg-deep);
+            border: 1px solid var(--color-electric-blue);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: var(--transition-bounce);
+            box-shadow: 0 0 50px rgba(0, 240, 255, 0.15);
+        }
+
+        .modal-container.large {
+            max-width: 1000px;
+            height: 85vh;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: 0.3s;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--color-warning-red);
+            transform: rotate(90deg);
+        }
+
+        /* ==========================================================================
+           FORMS & INPUTS
+           ========================================================================== */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            font-family: var(--font-code);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-electric-blue);
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+        }
+
+        .range-slider-container {
+            margin: 1rem 0;
+        }
+
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--color-electric-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--color-electric-blue);
+        }
+
+        /* ==========================================================================
+           TOAST NOTIFICATIONS
+           ========================================================================== */
+        #notification-area {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .toast {
+            min-width: 300px;
+            padding: 1.2rem 1.5rem;
+            background: rgba(5, 5, 10, 0.95);
+            border-left: 4px solid var(--color-electric-blue);
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideInRight 0.4s ease forwards;
+            font-family: var(--font-body);
+        }
+
+        .toast.success { border-color: var(--color-trust-green); }
+        .toast.error { border-color: var(--color-warning-red); }
+        .toast.info { border-color: var(--color-electric-blue); }
+
+        .toast-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+            font-family: var(--font-header);
+        }
+
+        .toast-msg {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOutRight {
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           DASHBOARD ELEMENTS
+           ========================================================================== */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            min-height: 80vh;
+        }
+
+        .dash-sidebar {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dash-menu {
+            list-style: none;
+        }
+
+        .dash-menu li {
+            margin-bottom: 1rem;
+        }
+
+        .dash-menu li button {
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            font-family: var(--font-header);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            padding: 10px;
+            border-radius: 6px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dash-menu li button.active, .dash-menu li button:hover {
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--color-electric-blue);
+        }
+
+        .dash-content {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 2px solid transparent;
+        }
+
+        .stat-card.neon-blue { border-color: var(--color-electric-blue); }
+        .stat-card.neon-purple { border-color: var(--color-neon-purple); }
+        .stat-card.neon-green { border-color: var(--color-trust-green); }
+        .stat-card.neon-red { border-color: var(--color-warning-red); }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            margin-bottom: 5px;
+        }
+
+        /* Admin Table */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .admin-table th {
+            text-align: left;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--color-electric-blue);
+            font-family: var(--font-header);
+            text-transform: uppercase;
+        }
+
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ddd;
+        }
+
+        .admin-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending { background: rgba(255, 215, 0, 0.2); color: #FFD700; }
+        .status-verified { background: rgba(0, 255, 102, 0.2); color: var(--color-trust-green); }
+        .status-rejected { background: rgba(255, 51, 102, 0.2); color: var(--color-warning-red); }
+
+        /* SKILL RADAR OVERRIDE */
+        .radar-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+
+        /* ==========================================================================
+           NEW CSS: APPLICATION READINESS BRUTALITY ENGINE
+           ========================================================================== */
+        
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .modal-tab-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            font-family: var(--font-header);
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .modal-tab-btn.active {
+            color: #fff;
+        }
+
+        .modal-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-electric-blue), var(--color-neon-purple));
+            box-shadow: 0 0 10px var(--color-electric-blue);
+        }
+
+        /* Brutal Readiness Styles */
+        .readiness-container {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .readiness-container.active {
+            display: block;
+        }
+
+        .readiness-header {
+            background: linear-gradient(90deg, rgba(255, 94, 0, 0.1), rgba(255, 0, 127, 0.1));
+            border: 1px solid rgba(255, 94, 0, 0.3);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .readiness-header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 5px; height: 100%;
+            background: var(--color-brutal-orange);
+            box-shadow: 0 0 15px var(--color-brutal-orange);
+        }
+
+        .readiness-score-box {
+            text-align: right;
+        }
+
+        .readiness-percentage {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 20px var(--color-brutal-orange);
+        }
+
+        .readiness-label {
+            color: var(--color-brutal-yellow);
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Brutal Skill Gap Bars */
+        .skill-gap-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-gap-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+        }
+
+        .skill-gap-track {
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-gap-fill {
+            height: 100%;
+            background: var(--color-trust-green);
+            width: 0%;
+            transition: width 1s cubic-bezier(0.2, 1, 0.2, 1);
+            position: relative;
+        }
+
+        .skill-gap-fill.gap-warning {
+            background: var(--color-brutal-yellow);
+        }
+
+        .skill-gap-fill.gap-danger {
+            background: var(--color-brutal-orange);
+            box-shadow: 0 0 10px var(--color-brutal-orange);
+        }
+
+        .skill-req-marker {
+            position: absolute;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #fff;
+            z-index: 2;
+            opacity: 0.8;
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 10px;
+        }
+
+        .badge-elite { background: rgba(0, 255, 255, 0.2); color: var(--color-elite-cyan); border: 1px solid var(--color-elite-cyan); }
+        .badge-mid { background: rgba(255, 214, 0, 0.2); color: var(--color-brutal-yellow); border: 1px solid var(--color-brutal-yellow); }
+        .badge-low { background: rgba(255, 94, 0, 0.2); color: var(--color-brutal-orange); border: 1px solid var(--color-brutal-orange); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           NEW CSS: COGNITIVE REALITY CHECK ENGINE
+           ========================================================================== */
+        
+        .reality-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .reality-section.active {
+            display: block;
+        }
+
+        .section-subtitle-neon {
+            font-family: var(--font-header);
+            font-size: 1.2rem;
+            color: var(--color-reality-cyan);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-reality-cyan);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Phase 1 Sliders */
+        .reality-slider-container {
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.02);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .reality-slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .reality-slider {
+            width: 100%;
+            height: 8px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 4px;
+            appearance: none;
+            outline: none;
+        }
+
+        .reality-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-reality-cyan);
+            box-shadow: 0 0 10px var(--color-reality-cyan);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .reality-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Phase 2 Quiz */
+        .quiz-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #eee;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .quiz-btn {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.8rem;
+            border-radius: 6px;
+            color: #aaa;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+        }
+
+        .quiz-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            border-color: var(--color-reality-magenta);
+        }
+
+        .quiz-btn.selected {
+            background: rgba(255, 0, 255, 0.1);
+            border-color: var(--color-reality-magenta);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.2);
+        }
+
+        .reality-action-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(90deg, var(--color-reality-cyan), var(--color-reality-magenta));
+            border: none;
+            color: #fff;
+            font-family: var(--font-header);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-top: 2rem;
+            transition: 0.3s;
+        }
+
+        .reality-action-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+        }
+
+        /* Dashboard Results */
+        .illusion-dashboard {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0,0,0,0.6);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .illusion-metrics {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+        }
+
+        .illusion-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .illusion-val {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .val-perception { color: var(--color-reality-cyan); text-shadow: 0 0 10px var(--color-reality-cyan); }
+        .val-reality { color: var(--color-reality-magenta); text-shadow: 0 0 10px var(--color-reality-magenta); }
+
+        .illusion-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        .illusion-alert {
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .alert-red { background: rgba(255, 51, 102, 0.2); border: 1px solid var(--color-warning-red); color: var(--color-warning-red); }
+        .alert-yellow { background: rgba(255, 215, 0, 0.2); border: 1px solid #FFD700; color: #FFD700; }
+        .alert-green { background: rgba(0, 255, 102, 0.2); border: 1px solid var(--color-trust-green); color: var(--color-trust-green); }
+
+        /* Dual Bars */
+        .dual-bar-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .dual-bar-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dual-bar-track {
+            height: 16px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-perception {
+            position: absolute;
+            top: 0; left: 0;
+            height: 50%;
+            background: var(--color-reality-cyan);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+
+        .bar-reality {
+            position: absolute;
+            bottom: 0; left: 0;
+            height: 50%;
+            background: var(--color-reality-magenta);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.2, 1, 0.2, 1) 0.2s;
+        }
+
+        /* Roadmap */
+        .roadmap-timeline {
+            border-left: 2px solid rgba(255,255,255,0.1);
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--color-reality-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--color-reality-cyan);
+        }
+
+        .roadmap-skill {
+            color: var(--color-reality-magenta);
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .roadmap-task {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================================================
+           TASK 1, 2, 3, 4, 5, 8: FUSION FORCE UPGRADES CSS
+           ========================================================================== */
+        
+        /* TASK 5: DROPDOWN COLOR FIX */
+        select.form-select {
+            background-color: var(--color-bg-panel) !important;
+            color: #fff !important;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300F0FF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right .7em top 50%;
+            background-size: .65em auto;
+        }
+        
+        select.form-select option {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+        }
+
+        /* TASK 4: GLOBAL ANIMATION TOGGLE CSS */
+        .anim-toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .anim-toggle-label {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-family: var(--font-code);
+        }
+
+        .anim-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .anim-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .anim-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 20px;
+            border: 1px solid #555;
+        }
+
+        .anim-slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .anim-slider {
+            background-color: var(--color-electric-blue);
+            box-shadow: 0 0 10px var(--color-electric-blue-dim);
+        }
+
+        input:checked + .anim-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* TASK 4: NO ANIMATION CLASS logic */
+        body.no-animations * {
+            animation: none !important;
+            transition: none !important;
+        }
+        
+        body.no-animations #particle-canvas {
+            display: none;
+        }
+
+        /* TASK 3: DASHBOARD BUTTON GLOW */
+        .btn-dashboard-glow {
+            position: relative;
+            background: linear-gradient(45deg, rgba(0,240,255,0.1), rgba(176,38,255,0.1));
+            border: 1px solid var(--color-electric-blue);
+            box-shadow: 0 0 15px rgba(0,240,255,0.2);
+            animation: dashPulse 2s infinite;
+        }
+
+        @keyframes dashPulse {
+            0% { box-shadow: 0 0 15px rgba(0,240,255,0.2); }
+            50% { box-shadow: 0 0 25px rgba(0,240,255,0.5), 0 0 5px var(--color-neon-purple); }
+            100% { box-shadow: 0 0 15px rgba(0,240,255,0.2); }
+        }
+
+        /* TASK 8: PROFESSIONAL POLISH - Page Fade In */
+        body {
+            opacity: 0;
+            animation: pageFadeIn 1s ease-out forwards;
+        }
+
+        @keyframes pageFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* TASK 1: PREMIUM FOOTER CSS */
+        .fusion-footer {
+            margin-top: 5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            background: rgba(5,5,10,0.9);
+            backdrop-filter: blur(20px);
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fusion-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-electric-blue), transparent);
+            animation: borderLight 3s linear infinite;
+        }
+
+        @keyframes borderLight {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-header);
+            letter-spacing: 2px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .footer-col a:hover {
+            color: var(--color-electric-blue);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* TASK 2: RESPONSIVE BREAKPOINTS */
+        @media (max-width: 1024px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                flex-direction: column;
+                text-align: center;
+                height: auto;
+                padding-bottom: 4rem;
+            }
+            .hero-subtitle {
+                margin: 0 auto 2.5rem;
+                border-left: none;
+                border-bottom: 3px solid var(--color-neon-purple);
+                padding-bottom: 1rem;
+                padding-left: 0;
+            }
+            .hero-content div {
+                justify-content: center;
+            }
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+            .dash-sidebar {
+                margin-bottom: 2rem;
+            }
+            .modal-container.large {
+                grid-template-columns: 1fr;
+                height: auto;
+                overflow-y: scroll;
+            }
+            nav {
+                padding: 1rem;
+            }
+            .nav-links {
+                display: none; /* Simplified for prompt requirements, ideally hamburger */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* TASK 7: RISK SCANNER EXTENSION CSS */
+        .scanner-interactive {
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1rem;
+        }
+        
+        .risk-q-item {
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .risk-btn-group button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            border: 1px solid #555;
+            background: transparent;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .risk-btn-group button.selected-yes {
+            background: var(--color-warning-red);
+            color: #fff;
+            border-color: var(--color-warning-red);
+        }
+
+        .risk-btn-group button.selected-no {
+            background: var(--color-trust-green);
+            color: #fff;
+            border-color: var(--color-trust-green);
+        }
+
+        .risk-meter-container {
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .risk-meter-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="logo" onclick="app.router.go('home')">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            INTERNSHIELD
+        </div>
+        
+        <ul class="nav-links" id="main-nav">
+            </ul>
+
+        <div class="nav-profile-area" id="auth-area">
+            </div>
+
+        <div class="anim-toggle-wrapper">
+            <span class="anim-toggle-label">Performance Mode</span>
+            <label class="anim-switch">
+                <input type="checkbox" id="anim-toggle-input" checked onchange="app.ui.toggleAnimations(this)">
+                <span class="anim-slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    <div id="notification-area"></div>
+
+    <div class="app-container">
+        
+        <div id="view-home" class="view-section">
+            <section id="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">V2.2 // FUSION FORCE UPGRADE</div>
+                    <h1 class="hero-title">Trust What You Apply To.</h1>
+                    <h3 class="hero-subtitle">The world's first Trust Intelligence Layer for internship opportunities. Scan for scams, verify companies, and track your risk exposure.</h3>
+                    <div style="display: flex; gap: 1.5rem;">
+                        <button class="btn btn-primary" onclick="app.ui.scrollTo('explore')">Explore Database</button>
+                        <button class="btn btn-secondary" onclick="app.modals.open('scanner')">Risk Scanner</button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="shield-3d-container">
+                        <div class="shield-glass">
+                            <div class="shield-score-display" id="hero-trust-score">99</div>
+                            <div class="shield-label">Global Trust Index</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="stats-row" style="margin-bottom: 6rem;">
+                <div class="stat-card neon-blue">
+                    <div class="stat-number" id="total-internships-count">0</div>
+                    <div class="metric-label">Verified Opportunities</div>
+                </div>
+                <div class="stat-card neon-red">
+                    <div class="stat-number" id="total-scams-count">0</div>
+                    <div class="metric-label">Scams Blocked</div>
+                </div>
+                <div class="stat-card neon-green">
+                    <div class="stat-number" id="total-students-count">0</div>
+                    <div class="metric-label">Protected Students</div>
+                </div>
+                <div class="stat-card neon-purple">
+                    <div class="stat-number">$1.2M</div>
+                    <div class="metric-label">Fraud Prevented</div>
+                </div>
+            </div>
+
+            <section id="explore">
+                <div class="section-header">
+                    <h2 class="section-title">INTELLIGENCE DATABASE</h2>
+                    <p>Live feed of analyzed opportunities. Risk scores updated in real-time.</p>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-bottom: 2rem; background: var(--color-bg-panel); padding: 1rem; border-radius: 8px; border: var(--glass-border);">
+                    <input type="text" id="search-input" class="form-input" style="width: 300px;" placeholder="Search company, role, or skill..." onkeyup="app.listings.filter()">
+                    <div style="display: flex; gap: 1rem;">
+                        <select id="risk-filter" class="form-select" onchange="app.listings.filter()" style="width: 150px;">
+                            <option value="all">All Risks</option>
+                            <option value="safe">Safe Only</option>
+                            <option value="warning">Moderate</option>
+                            <option value="danger">High Risk</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-3" id="internship-grid">
+                    </div>
+            </section>
+        </div>
+
+        <div id="view-dashboard" class="view-section" style="display: none; padding-top: 100px;">
+            <h2 style="margin-bottom: 2rem;">Command Center // <span class="user-name-display" style="color:var(--color-electric-blue)">User</span></h2>
+            
+            <div class="dash-grid">
+                <aside class="dash-sidebar">
+                    <ul class="dash-menu">
+                        <li><button class="active" onclick="app.ui.switchDashTab('overview')">Risk Overview</button></li>
+                        <li><button onclick="app.ui.switchDashTab('applications')">My Applications</button></li>
+                        <li><button onclick="app.ui.switchDashTab('profile')">Edit Profile</button></li>
+                        <li><button onclick="app.ui.switchDashTab('achievements')">Achievements</button></li>
+                    </ul>
+                </aside>
+
+                <main class="dash-content">
+                    
+                    <div id="tab-overview">
+                        <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1.5rem;">Trust Exposure Matrix</h3>
+                        <div class="stats-row">
+                            <div class="stat-card neon-blue">
+                                <div class="stat-number" id="dash-applied-count">0</div>
+                                <div class="metric-label">Total Applications</div>
+                            </div>
+                            <div class="stat-card neon-green">
+                                <div class="stat-number" id="dash-safe-percent">0%</div>
+                                <div class="metric-label">Safe Exposure</div>
+                            </div>
+                            <div class="stat-card neon-red">
+                                <div class="stat-number" id="dash-risk-index">Low</div>
+                                <div class="metric-label">Current Risk Index</div>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div class="card">
+                                <h4 style="color: var(--color-electric-blue);">Trust Velocity Timeline</h4>
+                                <div style="height: 200px; display: flex; align-items: flex-end; gap: 10px; padding: 20px 0; border-bottom: 1px solid #333;" id="trust-graph">
+                                    </div>
+                                <p style="font-size: 0.8rem; margin-top: 1rem;">Last 7 applications analysis</p>
+                            </div>
+
+                            <div class="card">
+                                <h4 style="color: var(--color-neon-purple);">Skill Match Radar</h4>
+                                <div class="radar-box">
+                                    <svg width="200" height="200" viewBox="0 0 100 100" id="dash-radar">
+                                        </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-applications" style="display: none;">
+                        <h3>Application History</h3>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Role</th>
+                                    <th>Trust Score</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applications-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div id="tab-profile" style="display: none;">
+                        <h3>Neural Profile Settings</h3>
+                        <form onsubmit="app.handlers.updateProfile(event)">
+                            <div class="form-group">
+                                <label class="form-label">Display Name</label>
+                                <input type="text" id="edit-name" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Professional Bio</label>
+                                <textarea id="edit-bio" class="form-textarea" rows="3"></textarea>
+                            </div>
+                            
+                            <h4 style="margin-top: 2rem; color: var(--color-electric-blue);">Skill Matrix Configuration</h4>
+                            <div id="skill-sliders">
+                                </div>
+
+                            <button type="submit" class="btn btn-primary" style="margin-top: 2rem;">Update Neural Link</button>
+                        </form>
+                    </div>
+
+                    <div id="tab-achievements" style="display: none;">
+                        <h3>Badges & Clearance Levels</h3>
+                        <div class="grid-3" id="achievements-grid">
+                            </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+
+        <div id="view-admin" class="view-section" style="display: none; padding-top: 100px;">
+            <h2 style="color: var(--color-warning-red);">ADMINISTRATION CONSOLE [SECURE]</h2>
+            
+            <div class="stats-row">
+                <div class="stat-card neon-red">
+                    <div class="stat-number" id="admin-pending-count">0</div>
+                    <div class="metric-label">Pending Verifications</div>
+                </div>
+                <div class="stat-card neon-purple">
+                    <div class="stat-number" id="admin-reports-count">0</div>
+                    <div class="metric-label">Active Scam Reports</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3>Pending Internship Approvals</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Role</th>
+                            <th>Submitted By</th>
+                            <th>Auto-Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-pending-table"></tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>Global Database Control</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Company</th>
+                            <th>Trust Score</th>
+                            <th>Reports</th>
+                            <th>Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-db-table"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="modal-auth">
+        <div class="modal-container">
+            <button class="close-modal-btn" onclick="app.modals.close('auth')">&times;</button>
+            <h2 id="auth-title" style="text-align: center; color: var(--color-electric-blue);">Initialize Session</h2>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center;">
+                <button class="btn btn-sm btn-primary" onclick="app.ui.toggleAuthMode('login')">Login</button>
+                <button class="btn btn-sm btn-secondary" onclick="app.ui.toggleAuthMode('register')">Register</button>
+            </div>
+
+            <form id="auth-form" onsubmit="app.handlers.handleAuth(event)">
+                <div class="form-group" id="field-username">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-input" required>
+                </div>
+                <div class="form-group" id="field-email" style="display: none;">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-input">
+                </div>
+                <div class="form-group" id="field-password">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-input" required>
+                </div>
+                <div class="form-group" id="field-role" style="display: none;">
+                    <label class="form-label">Role</label>
+                    <select name="role" class="form-select">
+                        <option value="student">Student</option>
+                        <option value="admin">Admin (Simulated)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Execute</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-details">
+        <div class="modal-container large">
+            <button class="close-modal-btn" onclick="app.modals.close('details')">&times;</button>
+            
+            <div style="background: rgba(0,0,0,0.3); padding: 3rem; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                <div id="modal-company-logo" style="width: 100px; height: 100px; background: #fff; border-radius: 50%; color:#000; font-size: 2.5rem; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 1.5rem;">C</div>
+                <h2 id="modal-company-name">Company</h2>
+                <div id="modal-trust-badge" class="trust-badge badge-safe" style="margin-bottom: 2rem;">VERIFIED</div>
+
+                <div style="position: relative; width: 150px; height: 150px; margin-bottom: 1rem;">
+                    <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(180deg);">
+                        <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#333" stroke-width="2" />
+                        <path id="modal-gauge-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--color-trust-green)" stroke-width="2" stroke-dasharray="100, 100" />
+                    </svg>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-display); font-size: 2rem; font-weight: bold;" id="modal-trust-score">98</div>
+                </div>
+                <p style="font-size: 0.8rem; text-transform: uppercase;">Trust Intelligence Score</p>
+            </div>
+
+            <div style="padding: 3rem; overflow-y: auto; display: flex; flex-direction: column;">
+                
+                <div class="modal-tabs">
+                    <button class="modal-tab-btn active" onclick="app.ui.switchModalTab('trust')">Trust Intelligence</button>
+                    <button class="modal-tab-btn" onclick="app.ui.switchModalTab('readiness')">Readiness Index</button>
+                    <button class="modal-tab-btn" onclick="app.realityCheck.switchToRealityTab()">Reality Check</button>
+                </div>
+
+                <h2 id="modal-job-title" style="color: var(--color-electric-blue);">Job Title</h2>
+                <div style="display: flex; gap: 2rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">
+                    <div>
+                        <span style="color: #666; font-size: 0.8rem;">STIPEND</span>
+                        <div id="modal-stipend" style="font-weight: bold; font-size: 1.1rem;">$0</div>
+                    </div>
+                    <div>
+                        <span style="color: #666; font-size: 0.8rem;">CONVERSION</span>
+                        <div id="modal-conversion" style="font-weight: bold; font-size: 1.1rem;">0%</div>
+                    </div>
+                </div>
+
+                <div id="modal-section-trust" class="readiness-container active">
+                    <h4 style="margin-bottom: 1rem;">Trust Breakdown</h4>
+                    <div id="modal-breakdown-bars">
+                        </div>
+                </div>
+
+                <div id="modal-section-readiness" class="readiness-container">
+                    <div class="readiness-header">
+                        <div>
+                            <h3 style="margin: 0; color: #fff;">APPLICATION READINESS INDEX</h3>
+                            <p style="margin: 0; font-size: 0.8rem; color: #bbb;">Neural Skill Gap Analysis Engine</p>
+                            <div id="readiness-verdict" style="margin-top: 10px;">
+                                </div>
+                        </div>
+                        <div class="readiness-score-box">
+                            <div class="readiness-percentage" id="readiness-score-val">0%</div>
+                            <div class="readiness-label">Match Probability</div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 1rem;">Brutal Skill Gap Analysis</h4>
+                    <div id="readiness-skill-list">
+                        </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                         <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px;">
+                             <div style="font-size: 0.8rem; color: #aaa;">Success Probability</div>
+                             <div style="font-family: var(--font-display); font-size: 1.2rem; color: var(--color-elite-cyan);" id="readiness-success-prob">0%</div>
+                         </div>
+                         <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 6px;">
+                             <div style="font-size: 0.8rem; color: #aaa;">Rejection Risk</div>
+                             <div style="font-family: var(--font-display); font-size: 1.2rem; color: var(--color-brutal-orange);" id="readiness-reject-risk">0%</div>
+                         </div>
+                    </div>
+                </div>
+
+                <div id="modal-section-reality" class="reality-section">
+                    </div>
+
+                <div style="margin-top: auto; padding-top: 2rem; display: flex; gap: 1rem;">
+                    <button id="btn-apply-modal" class="btn btn-primary" style="flex: 2;">Apply Now Securely</button>
+                    <button class="btn btn-danger" onclick="app.modals.openReport()" style="flex: 1;">Report Scam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-risk">
+        <div class="modal-container" style="border-color: var(--color-warning-red); box-shadow: 0 0 50px rgba(255, 51, 102, 0.3);">
+            <h2 style="color: var(--color-warning-red); display: flex; align-items: center; gap: 10px;">
+                ⚠️ HIGH RISK WARNING
+            </h2>
+            <p style="font-size: 1.1rem; color: #fff;">
+                The Artificial Intelligence engine has detected significant red flags with this opportunity.
+            </p>
+            <ul style="background: rgba(255, 51, 102, 0.1); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; list-style-position: inside; color: #ffcccc;">
+                <li>Trust Score below safety threshold (< 50)</li>
+                <li>History of payment complaints detected</li>
+                <li>Identity verification incomplete</li>
+            </ul>
+            <p>Applying may expose your personal data to malicious actors. Proceed?</p>
+            
+            <div id="extended-risk-scanner" class="scanner-interactive">
+                <h4 style="color: var(--color-text-secondary);">Interactive Risk Verification</h4>
+                <div id="risk-questions-container">
+                    </div>
+                <div class="risk-meter-container">
+                    <div id="risk-meter-fill" class="risk-meter-fill" style="width: 50%; background: orange;"></div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button class="btn btn-secondary" onclick="app.modals.close('risk')">Abort</button>
+                <button class="btn btn-danger" id="btn-risk-confirm">I Accept The Risk</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-scanner">
+        <div class="modal-container">
+            <button class="close-modal-btn" onclick="app.modals.close('scanner')">&times;</button>
+            <h2>Deep Threat Scanner</h2>
+            <p>Paste job description below to detect anomalies.</p>
+            <textarea class="form-textarea" rows="6" placeholder="Paste description here..."></textarea>
+            <button class="btn btn-primary" style="width:100%; margin-top:1rem;">Scan Now</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-report">
+        <div class="modal-container">
+            <button class="close-modal-btn" onclick="app.modals.close('report')">&times;</button>
+            <h2>Report Suspicious Activity</h2>
+            <form onsubmit="app.handlers.submitReport(event)">
+                <div class="form-group">
+                    <label class="form-label">Violation Type</label>
+                    <select id="report-type" class="form-select">
+                        <option value="payment">Asking for Money/Payment</option>
+                        <option value="fake">Fake Company/Identity</option>
+                        <option value="data">Data Harvesting</option>
+                        <option value="misleading">Misleading Job Description</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description & Evidence</label>
+                    <textarea id="report-desc" class="form-textarea" rows="4" placeholder="Paste emails or describe the interaction..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger" style="width: 100%;">Submit Intelligence Report</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-add">
+        <div class="modal-container">
+            <button class="close-modal-btn" onclick="app.modals.close('add')">&times;</button>
+            <h2>Submit New Opportunity</h2>
+            <form onsubmit="app.handlers.submitInternship(event)">
+                <div class="form-group">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" id="add-company" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Role Title</label>
+                    <input type="text" id="add-role" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stipend Info</label>
+                    <input type="text" id="add-stipend" class="form-input" placeholder="e.g. $1000/mo" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit for Review</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="fusion-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>About InternShield</h4>
+                <p style="font-size:0.9rem; line-height:1.6; color:#aaa;">The first neural-trust layer for early-career opportunities. We use AI to verify authenticity, calculate risk, and protect students from exploitation.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="app.router.go('home')">Intelligence Feed</a></li>
+                    <li><a href="#" onclick="app.modals.open('scanner')">Deep Scanner</a></li>
+                    <li><a href="#" onclick="app.router.go('dashboard')">Student Dashboard</a></li>
+                    <li><a href="#" onclick="app.router.go('admin')">Admin Portal</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Trust Metrics</h4>
+                <ul>
+                    <li><a href="#">Global Safety Index</a></li>
+                    <li><a href="#">Verified Partners</a></li>
+                    <li><a href="#">Scam Database</a></li>
+                    <li><a href="#">Transparency Report</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#">Fusion Force </a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Engineered by Fusion Force</span>
+            <span>© 2026 InternShield. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * INTERNSHIELD CORE SYSTEM V2.0
+         * Architect: Gemini 3 Pro
+         * Architecture: Modular, Object-Oriented Simulation
+         */
+
+        /* --- 1. CONFIGURATION & UTILITIES --- */
+        const CONSTANTS = {
+            STORAGE_KEY: 'internshield_v2_state',
+            ROLES: { STUDENT: 'student', ADMIN: 'admin' },
+            STATUS: { APPLIED: 'Applied', REVIEW: 'Under Review', ACCEPTED: 'Accepted', REJECTED: 'Rejected' },
+            SKILLS: ['React', 'NodeJS', 'Design', 'Python', 'Security', 'Data']
+        };
+
+        const utils = {
+            generateId: () => 'ID-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+            
+            formatDate: (dateString) => {
+                return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            },
+
+            calculateRiskLevel: (score) => {
+                if (score >= 80) return { level: 'SAFE', class: 'badge-safe', color: 'var(--color-trust-green)' };
+                if (score >= 50) return { level: 'WARNING', class: 'badge-warning', color: '#FFD700' };
+                return { level: 'CRITICAL', class: 'badge-danger', color: 'var(--color-warning-red)' };
+            },
+
+            // Notification System
+            notify: (message, type = 'info') => {
+                const container = document.getElementById('notification-area');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                let title = type === 'success' ? 'SUCCESS' : (type === 'error' ? 'ERROR' : 'SYSTEM INFO');
+                
+                toast.innerHTML = `
+                    <div>
+                        <span class="toast-title">${title}</span>
+                        <span class="toast-msg">${message}</span>
+                    </div>
+                    <button style="background:none; border:none; color:#fff; cursor:pointer;" onclick="this.parentElement.remove()">×</button>
+                `;
+
+                container.appendChild(toast);
+                
+                // Audio cue simulation logic could go here
+                
+                setTimeout(() => {
+                    toast.style.animation = 'fadeOutRight 0.5s ease forwards';
+                    setTimeout(() => toast.remove(), 500);
+                }, 4000);
+            }
+        };
+
+        /* --- 2. DATA LAYER (LOCALSTORAGE + SEEDING) --- */
+        const DataStore = {
+            state: {
+                currentUser: null,
+                users: [],
+                internships: [],
+                reports: []
+            },
+
+            // Initial Dummy Data
+            seed: () => {
+                return {
+                    currentUser: null,
+                    users: [
+                        {
+                            id: 'admin01',
+                            username: 'admin',
+                            password: '123',
+                            role: 'admin',
+                            name: 'System Administrator',
+                            skills: { 'React': 100, 'Security': 100 }
+                        },
+                        {
+                            id: 'user01',
+                            username: 'student',
+                            password: '123',
+                            role: 'student',
+                            name: 'Alex Mercer',
+                            bio: 'Cybersecurity enthusiast looking for frontend roles.',
+                            skills: { 'React': 70, 'NodeJS': 40, 'Design': 60, 'Python': 30, 'Security': 80, 'Data': 20 },
+                            applications: [], // { internId, status, date }
+                            achievements: ['early_adopter']
+                        }
+                    ],
+                    internships: [
+                        {
+                            id: 'INT-001',
+                            company: 'CyberDyne Systems',
+                            title: 'Frontend React Engineer',
+                            trustScore: 96,
+                            stipend: '$4,500/mo',
+                            conversion: '85%',
+                            verified: true,
+                            metrics: { auth: 98, domain: 95, reviews: 90, pay: 100 },
+                            skillsReq: { 'React': 80, 'Design': 60 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-002',
+                            company: 'XO Records',
+                            title: 'Web Producer (The Weeknd)',
+                            trustScore: 92,
+                            stipend: '$3,000/mo',
+                            conversion: '60%',
+                            verified: true,
+                            metrics: { auth: 100, domain: 98, reviews: 85, pay: 85 },
+                            skillsReq: { 'Design': 90, 'Data': 40 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-003',
+                            company: 'ScamTech LLC',
+                            title: 'Data Entry (No Exp)',
+                            trustScore: 25,
+                            stipend: 'Unpaid (Fee Req)',
+                            conversion: '0%',
+                            verified: false,
+                            metrics: { auth: 10, domain: 5, reviews: 10, pay: 0 },
+                            skillsReq: { 'Data': 10 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-004',
+                            company: 'Stark Industries',
+                            title: 'AI Research Intern',
+                            trustScore: 99,
+                            stipend: '$6,000/mo',
+                            conversion: '95%',
+                            verified: true,
+                            metrics: { auth: 100, domain: 100, reviews: 99, pay: 100 },
+                            skillsReq: { 'Python': 95, 'Data': 90 },
+                            submittedBy: 'system'
+                        },
+                         {
+                            id: 'INT-005',
+                            company: 'Sketchy Crypto',
+                            title: 'Marketing Ninja',
+                            trustScore: 45,
+                            stipend: 'Crypto Tokens',
+                            conversion: '1%',
+                            verified: false,
+                            metrics: { auth: 30, domain: 20, reviews: 20, pay: 10 },
+                            skillsReq: { 'Design': 50 },
+                            submittedBy: 'system'
+                        }
+                    ],
+                    reports: []
+                };
+            },
+
+            init: () => {
+                const stored = localStorage.getItem(CONSTANTS.STORAGE_KEY);
+                if (stored) {
+                    DataStore.state = JSON.parse(stored);
+                } else {
+                    DataStore.state = DataStore.seed();
+                    DataStore.save();
+                }
+                console.log('SYSTEM: Data Store Initialized', DataStore.state);
+            },
+
+            save: () => {
+                localStorage.setItem(CONSTANTS.STORAGE_KEY, JSON.stringify(DataStore.state));
+            },
+
+            // Helper to get fresh data
+            getInternships: () => DataStore.state.internships,
+            getUser: (username) => DataStore.state.users.find(u => u.username === username),
+            getCurrentUser: () => DataStore.state.currentUser
+        };
+
+        /* --- 3. UI RENDERER ENGINE --- */
+        const RenderEngine = {
+            
+            nav: () => {
+                const nav = document.getElementById('main-nav');
+                const authArea = document.getElementById('auth-area');
+                const user = DataStore.state.currentUser;
+
+                let links = `<li><a href="#" onclick="app.router.go('home')" class="active">Intelligence</a></li>`;
+                
+                if (user) {
+                    if (user.role === CONSTANTS.ROLES.STUDENT) {
+                        links += `<li><a href="#" onclick="app.router.go('dashboard')" class="btn-dashboard-glow" style="padding: 5px 15px; border-radius: 4px;">Dashboard</a></li>`;
+                    }
+                    if (user.role === CONSTANTS.ROLES.ADMIN) {
+                        links += `<li><a href="#" onclick="app.router.go('admin')">Admin Console</a></li>`;
+                    }
+                    
+                    authArea.innerHTML = `
+                        <div class="user-badge">
+                            <span class="user-name">${user.name}</span>
+                            <span class="user-role">${user.role}</span>
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="app.auth.logout()">Logout</button>
+                    `;
+                } else {
+                    authArea.innerHTML = `
+                        <button class="btn btn-sm btn-cyber" onclick="app.modals.open('auth')">Login / Register</button>
+                    `;
+                }
+                
+                nav.innerHTML = links;
+            },
+
+            internshipCard: (intern) => {
+                const risk = utils.calculateRiskLevel(intern.trustScore);
+                
+                return `
+                    <div class="card intern-card">
+                        <div class="card-top">
+                            <div class="company-logo-placeholder">${intern.company[0]}</div>
+                            <div class="trust-badge ${risk.class}">${risk.level}</div>
+                        </div>
+                        <h3 class="job-title">${intern.title}</h3>
+                        <div class="company-name">
+                            ${intern.company}
+                            ${intern.verified ? `<svg class="verified-tick" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>` : ''}
+                        </div>
+                        <div class="card-metrics">
+                            <div class="metric-box">
+                                <div class="metric-value" style="color: ${risk.color}">${intern.trustScore}</div>
+                                <div class="metric-label">Trust Score</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-value">${intern.conversion}</div>
+                                <div class="metric-label">Conversion</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-value">${intern.stipend}</div>
+                                <div class="metric-label">Stipend</div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-sm btn-primary" style="width:100%" onclick="app.modals.openInternship('${intern.id}')">Analyze</button>
+                        </div>
+                    </div>
+                `;
+            },
+
+            internshipGrid: (filter = 'all', searchTerm = '') => {
+                const container = document.getElementById('internship-grid');
+                const data = DataStore.state.internships;
+                
+                // Counters
+                let total = 0, scams = 0;
+
+                let html = '';
+                data.forEach(intern => {
+                    // Update stats
+                    total++;
+                    if(intern.trustScore < 50) scams++;
+
+                    // Filter Logic
+                    const risk = utils.calculateRiskLevel(intern.trustScore);
+                    if (filter !== 'all') {
+                        if (filter === 'safe' && risk.level !== 'SAFE') return;
+                        if (filter === 'warning' && risk.level !== 'WARNING') return;
+                        if (filter === 'danger' && risk.level !== 'CRITICAL') return;
+                    }
+
+                    // Search Logic
+                    const searchStr = (intern.company + intern.title).toLowerCase();
+                    if (searchTerm && !searchStr.includes(searchTerm.toLowerCase())) return;
+
+                    // Exclude pending if not admin (simplified for demo)
+                    if (intern.trustScore === 0) return; 
+
+                    html += RenderEngine.internshipCard(intern);
+                });
+
+                if (html === '') html = `<p style="grid-column: 1/-1; text-align:center; padding: 2rem;">No signals found matching parameters.</p>`;
+                container.innerHTML = html;
+
+                // Update Home Stats
+                document.getElementById('total-internships-count').innerText = total;
+                document.getElementById('total-scams-count').innerText = scams;
+                document.getElementById('total-students-count').innerText = DataStore.state.users.filter(u => u.role === 'student').length * 124; // Simulated multiplier
+            },
+
+            studentDashboard: () => {
+                const user = DataStore.state.currentUser;
+                if (!user || user.role !== 'student') return;
+
+                document.querySelectorAll('.user-name-display').forEach(el => el.innerText = user.name);
+                
+                // 1. Overview Stats
+                document.getElementById('dash-applied-count').innerText = user.applications.length;
+                
+                // Calculate Risk Exposure
+                let safeApps = 0;
+                let totalTrust = 0;
+                user.applications.forEach(app => {
+                    const intern = DataStore.state.internships.find(i => i.id === app.internId);
+                    if (intern) {
+                        if (intern.trustScore >= 80) safeApps++;
+                        totalTrust += intern.trustScore;
+                    }
+                });
+
+                const safePercent = user.applications.length > 0 ? Math.round((safeApps / user.applications.length) * 100) : 100;
+                document.getElementById('dash-safe-percent').innerText = safePercent + '%';
+                
+                const avgTrust = user.applications.length > 0 ? totalTrust / user.applications.length : 100;
+                const riskIndex = avgTrust > 80 ? 'Low' : (avgTrust > 50 ? 'Medium' : 'CRITICAL');
+                document.getElementById('dash-risk-index').innerText = riskIndex;
+                document.getElementById('dash-risk-index').style.color = avgTrust > 80 ? 'var(--color-trust-green)' : (avgTrust > 50 ? '#FFD700' : 'var(--color-warning-red)');
+
+                // 2. Applications Table
+                const appTable = document.getElementById('applications-table-body');
+                appTable.innerHTML = user.applications.map(app => {
+                    const intern = DataStore.state.internships.find(i => i.id === app.internId);
+                    return `
+                        <tr>
+                            <td>${intern ? intern.company : 'Unknown'}</td>
+                            <td>${intern ? intern.title : 'Unknown'}</td>
+                            <td style="color:${utils.calculateRiskLevel(intern?.trustScore || 0).color}">${intern?.trustScore || 0}</td>
+                            <td>${utils.formatDate(app.date)}</td>
+                            <td><span class="status-pill status-verified">${app.status}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+
+                // 3. Profile Sliders
+                const sliderContainer = document.getElementById('skill-sliders');
+                sliderContainer.innerHTML = CONSTANTS.SKILLS.map(skill => {
+                    const val = user.skills[skill] || 0;
+                    return `
+                        <div class="range-slider-container">
+                            <div style="display:flex; justify-content:space-between; font-size: 0.8rem; margin-bottom: 5px;">
+                                <span>${skill}</span>
+                                <span id="val-${skill}">${val}%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="${val}" class="range-slider" 
+                                oninput="document.getElementById('val-${skill}').innerText = this.value + '%'"
+                                name="skill_${skill}">
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('edit-name').value = user.name;
+                document.getElementById('edit-bio').value = user.bio || '';
+
+                // 4. Render Radar
+                RenderEngine.renderRadar(user.skills);
+            },
+
+            adminDashboard: () => {
+                const pendingTable = document.getElementById('admin-pending-table');
+                const dbTable = document.getElementById('admin-db-table');
+                
+                // Mock Pending Items
+                const pending = DataStore.state.internships.filter(i => !i.verified); // Using unverified as pending proxy
+                
+                pendingTable.innerHTML = pending.length ? pending.map(i => `
+                    <tr>
+                        <td>${i.company}</td>
+                        <td>${i.title}</td>
+                        <td>${i.submittedBy || 'System'}</td>
+                        <td>${i.trustScore}</td>
+                        <td>
+                            <button class="btn btn-sm btn-success" onclick="app.admin.verify('${i.id}')">Approve</button>
+                            <button class="btn btn-sm btn-danger" onclick="app.admin.reject('${i.id}')">Ban</button>
+                        </td>
+                    </tr>
+                `).join('') : '<tr><td colspan="5" style="text-align:center;">No pending verifications.</td></tr>';
+
+                document.getElementById('admin-pending-count').innerText = pending.length;
+                document.getElementById('admin-reports-count').innerText = DataStore.state.reports.length;
+
+                // All DB
+                dbTable.innerHTML = DataStore.state.internships.map(i => `
+                    <tr>
+                        <td><span style="font-family:monospace; font-size:0.8rem;">${i.id}</span></td>
+                        <td>${i.company}</td>
+                        <td style="color:${utils.calculateRiskLevel(i.trustScore).color}">${i.trustScore}</td>
+                        <td>0</td>
+                        <td>
+                            <button class="btn btn-sm btn-secondary" onclick="app.modals.openInternship('${i.id}')">View</button>
+                        </td>
+                    </tr>
+                `).join('');
+            },
+
+            renderRadar: (skills) => {
+                // Simple SVG Polygon Logic
+                const svg = document.getElementById('dash-radar');
+                if(!svg) return;
+                
+                const centerX = 50, centerY = 50, radius = 40;
+                const points = CONSTANTS.SKILLS.map((skill, index) => {
+                    const val = skills[skill] || 0;
+                    const angle = (Math.PI * 2 * index) / CONSTANTS.SKILLS.length - Math.PI / 2;
+                    const r = (val / 100) * radius;
+                    const x = centerX + r * Math.cos(angle);
+                    const y = centerY + r * Math.sin(angle);
+                    return `${x},${y}`;
+                }).join(' ');
+
+                // Draw Background grid
+                const bgPoints = CONSTANTS.SKILLS.map((_, i) => {
+                    const angle = (Math.PI * 2 * i) / CONSTANTS.SKILLS.length - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    return `${x},${y}`;
+                }).join(' ');
+
+                svg.innerHTML = `
+                    <polygon points="${bgPoints}" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+                    <polygon points="${points}" fill="rgba(0, 240, 255, 0.3)" stroke="var(--color-electric-blue)" stroke-width="2" />
+                    ${CONSTANTS.SKILLS.map((s,i) => {
+                        const angle = (Math.PI * 2 * i) / CONSTANTS.SKILLS.length - Math.PI / 2;
+                        const x = centerX + (radius + 10) * Math.cos(angle);
+                        const y = centerY + (radius + 10) * Math.sin(angle);
+                        return `<text x="${x}" y="${y}" fill="#fff" font-size="5" text-anchor="middle" alignment-baseline="middle">${s}</text>`;
+                    }).join('')}
+                `;
+            }
+        };
+
+        /* --- 4. APPLICATION LOGIC --- */
+        const app = {
+            
+            // Initialization
+            init: () => {
+                DataStore.init();
+                
+                // TASK 4: Load Settings
+                const savedAnim = localStorage.getItem('animationsEnabled');
+                if (savedAnim !== null) {
+                    app.settings.animationsEnabled = savedAnim === 'true';
+                    document.getElementById('anim-toggle-input').checked = app.settings.animationsEnabled;
+                    app.ui.toggleAnimations(document.getElementById('anim-toggle-input'));
+                }
+
+                // Check session
+                if (DataStore.state.currentUser) {
+                    utils.notify(`Welcome back, ${DataStore.state.currentUser.name}`);
+                    RenderEngine.nav();
+                } else {
+                    RenderEngine.nav();
+                }
+
+                // TASK 6: Add Extra Internships
+                app.handlers.addExtraInternships();
+
+                // Initial Render
+                RenderEngine.internshipGrid();
+
+                // Particle Background Animation
+                app.ui.initParticles();
+
+                // TASK 7: Init Risk Questions
+                app.handlers.renderRiskQuestions();
+            },
+
+            // Routing System (Simple View Switcher)
+            router: {
+                go: (viewName) => {
+                    document.querySelectorAll('.view-section').forEach(el => el.style.display = 'none');
+                    document.getElementById(`view-${viewName}`).style.display = 'block';
+                    
+                    if (viewName === 'home') RenderEngine.internshipGrid();
+                    if (viewName === 'dashboard') RenderEngine.studentDashboard();
+                    if (viewName === 'admin') RenderEngine.adminDashboard();
+
+                    window.scrollTo(0,0);
+                }
+            },
+
+            // Authentication System
+            auth: {
+                login: (username, password) => {
+                    const user = DataStore.state.users.find(u => u.username === username && u.password === password);
+                    if (user) {
+                        DataStore.state.currentUser = user;
+                        DataStore.save();
+                        app.modals.close('auth');
+                        RenderEngine.nav();
+                        utils.notify('Neural Link Established. Access Granted.', 'success');
+                        
+                        // Redirect based on role
+                        if (user.role === 'admin') app.router.go('admin');
+                        else app.router.go('dashboard');
+                    } else {
+                        utils.notify('Authentication Failed. Invalid Credentials.', 'error');
+                    }
+                },
+
+                register: (username, password, role) => {
+                    if (DataStore.state.users.find(u => u.username === username)) {
+                        utils.notify('User Identity Already Exists.', 'error');
+                        return;
+                    }
+
+                    const newUser = {
+                        id: utils.generateId(),
+                        username, password, role,
+                        name: username,
+                        skills: {},
+                        applications: [],
+                        achievements: []
+                    };
+
+                    DataStore.state.users.push(newUser);
+                    DataStore.state.currentUser = newUser;
+                    DataStore.save();
+                    
+                    app.modals.close('auth');
+                    RenderEngine.nav();
+                    utils.notify('New Identity Created. Welcome to InternShield.', 'success');
+                    app.router.go('dashboard');
+                },
+
+                logout: () => {
+                    DataStore.state.currentUser = null;
+                    DataStore.save();
+                    RenderEngine.nav();
+                    app.router.go('home');
+                    utils.notify('Session Terminated.', 'info');
+                }
+            },
+
+            // Logic Handlers
+            handlers: {
+                handleAuth: (e) => {
+                    e.preventDefault();
+                    const form = e.target;
+                    const mode = form.getAttribute('data-mode') || 'login';
+                    const username = form.username.value;
+                    const password = form.password.value;
+                    
+                    if (mode === 'login') {
+                        app.auth.login(username, password);
+                    } else {
+                        const role = form.role.value;
+                        app.auth.register(username, password, role);
+                    }
+                },
+
+                submitReport: (e) => {
+                    e.preventDefault();
+                    const type = document.getElementById('report-type').value;
+                    const desc = document.getElementById('report-desc').value;
+                    
+                    DataStore.state.reports.push({
+                        id: utils.generateId(),
+                        type, desc, 
+                        date: new Date().toISOString()
+                    });
+                    
+                    // Instant Trust Penalty for Simulation
+                    utils.notify('Report Submitted. Analyzing Threat Vector...', 'success');
+                    app.modals.close('report');
+                },
+
+                updateProfile: (e) => {
+                    e.preventDefault();
+                    const user = DataStore.state.currentUser;
+                    const form = e.target;
+                    
+                    user.name = document.getElementById('edit-name').value;
+                    user.bio = document.getElementById('edit-bio').value;
+                    
+                    // Update Skills
+                    CONSTANTS.SKILLS.forEach(skill => {
+                        user.skills[skill] = parseInt(form[`skill_${skill}`].value);
+                    });
+
+                    DataStore.save();
+                    utils.notify('Profile Matrix Updated.', 'success');
+                    RenderEngine.studentDashboard(); // Re-render radar
+                },
+
+                applyToInternship: (internId, force = false) => {
+                    const user = DataStore.state.currentUser;
+                    if (!user) {
+                        app.modals.open('auth');
+                        return;
+                    }
+
+                    const intern = DataStore.state.internships.find(i => i.id === internId);
+                    
+                    // Check Logic: Already applied?
+                    if (user.applications.find(a => a.internId === internId)) {
+                        utils.notify('You have already applied to this position.', 'info');
+                        return;
+                    }
+
+                    // Risk Check
+                    if (intern.trustScore < 50 && !force) {
+                        // Store pending ID in button for confirm
+                        document.getElementById('btn-risk-confirm').onclick = () => {
+                            app.modals.close('risk');
+                            app.handlers.applyToInternship(internId, true);
+                        };
+                        app.modals.open('risk');
+                        return;
+                    }
+
+                    // Execute Application
+                    user.applications.push({
+                        internId: intern.id,
+                        date: new Date().toISOString(),
+                        status: CONSTANTS.STATUS.APPLIED
+                    });
+                    DataStore.save();
+                    
+                    app.modals.close('details');
+                    utils.notify(`Application transmitted to ${intern.company}. Encrypted.`, 'success');
+                },
+
+                // TASK 6: ADD EXTRA INTERNSHIPS
+                addExtraInternships: () => {
+                    const extraInternships = [
+                        {
+                            id: 'INT-AI-001',
+                            company: 'NeuroCore AI',
+                            title: 'AI Engineer',
+                            trustScore: 94,
+                            stipend: '$5,500/mo',
+                            conversion: '80%',
+                            verified: true,
+                            metrics: { auth: 95, domain: 92, reviews: 88, pay: 100 },
+                            skillsReq: { 'Python': 90, 'Data': 85 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-BC-002',
+                            company: 'ChainLink Labs',
+                            title: 'Blockchain Analyst',
+                            trustScore: 89,
+                            stipend: '$4,200/mo',
+                            conversion: '75%',
+                            verified: true,
+                            metrics: { auth: 90, domain: 95, reviews: 82, pay: 90 },
+                            skillsReq: { 'Security': 85, 'NodeJS': 70 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-SEC-003',
+                            company: 'Fortress Cyber',
+                            title: 'Cybersecurity Auditor',
+                            trustScore: 98,
+                            stipend: '$5,000/mo',
+                            conversion: '90%',
+                            verified: true,
+                            metrics: { auth: 100, domain: 100, reviews: 96, pay: 100 },
+                            skillsReq: { 'Security': 95, 'Python': 60 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-UX-004',
+                            company: 'PixelPerfect',
+                            title: 'UX Researcher',
+                            trustScore: 85,
+                            stipend: '$3,500/mo',
+                            conversion: '60%',
+                            verified: true,
+                            metrics: { auth: 88, domain: 85, reviews: 80, pay: 90 },
+                            skillsReq: { 'Design': 95, 'React': 40 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-FS-005',
+                            company: 'WebFlow Solutions',
+                            title: 'Fullstack Developer',
+                            trustScore: 91,
+                            stipend: '$4,800/mo',
+                            conversion: '82%',
+                            verified: true,
+                            metrics: { auth: 92, domain: 90, reviews: 89, pay: 95 },
+                            skillsReq: { 'React': 90, 'NodeJS': 90 },
+                            submittedBy: 'system'
+                        },
+                        {
+                            id: 'INT-DS-006',
+                            company: 'DataMinds Inc.',
+                            title: 'Data Scientist',
+                            trustScore: 96,
+                            stipend: '$6,200/mo',
+                            conversion: '88%',
+                            verified: true,
+                            metrics: { auth: 98, domain: 96, reviews: 92, pay: 100 },
+                            skillsReq: { 'Data': 98, 'Python': 95 },
+                            submittedBy: 'system'
+                        }
+                    ];
+
+                    // Check if already added to avoid duplicates on re-run
+                    const existingIds = DataStore.state.internships.map(i => i.id);
+                    extraInternships.forEach(intern => {
+                        if (!existingIds.includes(intern.id)) {
+                            DataStore.state.internships.push(intern);
+                        }
+                    });
+                },
+
+                // TASK 7: RENDER RISK QUESTIONS
+                renderRiskQuestions: () => {
+                    const container = document.getElementById('risk-questions-container');
+                    const questions = [
+                        "Were you asked for payment before interview?",
+                        "Is the company domain verified on SSL?",
+                        "Are the offer letters professionally formatted?",
+                        "Is the recruiter using a corporate email?",
+                        "Is the job description vague or generic?"
+                    ];
+
+                    let html = '';
+                    questions.forEach((q, index) => {
+                        html += `
+                            <div class="risk-q-item">
+                                <span>${q}</span>
+                                <div class="risk-btn-group">
+                                    <button onclick="app.handlers.answerRisk(this, ${index}, 'yes')">Yes</button>
+                                    <button onclick="app.handlers.answerRisk(this, ${index}, 'no')">No</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                },
+
+                answerRisk: (btn, index, answer) => {
+                    // Visual Selection
+                    const parent = btn.parentElement;
+                    parent.querySelectorAll('button').forEach(b => {
+                        b.classList.remove('selected-yes');
+                        b.classList.remove('selected-no');
+                    });
+                    
+                    if (answer === 'yes') btn.classList.add('selected-yes');
+                    else btn.classList.add('selected-no');
+
+                    // Calculate
+                    app.handlers.calculateInteractiveRisk();
+                },
+
+                calculateInteractiveRisk: () => {
+                    const container = document.getElementById('risk-questions-container');
+                    const yesBtns = container.querySelectorAll('.selected-yes');
+                    const noBtns = container.querySelectorAll('.selected-no');
+                    
+                    // Simple logic: Question 1 & 5 are bad if Yes. 2, 3, 4 are bad if No.
+                    // Q1: Payment? Yes = Bad
+                    // Q2: Domain Verified? No = Bad
+                    // Q3: Professional? No = Bad
+                    // Q4: Corporate Email? No = Bad
+                    // Q5: Vague? Yes = Bad
+
+                    let riskScore = 0;
+                    const inputs = Array.from(container.children); // 5 items
+
+                    // Check status of each button group
+                    const getAnswer = (idx) => {
+                        const group = inputs[idx].querySelector('.risk-btn-group');
+                        if (group.querySelector('.selected-yes')) return 'yes';
+                        if (group.querySelector('.selected-no')) return 'no';
+                        return null;
+                    };
+
+                    if (getAnswer(0) === 'yes') riskScore += 30; // High risk
+                    if (getAnswer(1) === 'no') riskScore += 20;
+                    if (getAnswer(2) === 'no') riskScore += 10;
+                    if (getAnswer(3) === 'no') riskScore += 25;
+                    if (getAnswer(4) === 'yes') riskScore += 15;
+
+                    const meter = document.getElementById('risk-meter-fill');
+                    meter.style.width = riskScore + '%';
+                    
+                    if (riskScore < 30) meter.style.background = 'var(--color-trust-green)';
+                    else if (riskScore < 60) meter.style.background = '#FFD700';
+                    else meter.style.background = 'var(--color-warning-red)';
+                }
+            },
+
+            // Admin Logic
+            admin: {
+                verify: (id) => {
+                    const intern = DataStore.state.internships.find(i => i.id === id);
+                    if(intern) {
+                        intern.verified = true;
+                        intern.trustScore = 95; // Boost score
+                        DataStore.save();
+                        RenderEngine.adminDashboard();
+                        utils.notify('Entity Verified. Trust Score Updated.', 'success');
+                    }
+                },
+                reject: (id) => {
+                    const idx = DataStore.state.internships.findIndex(i => i.id === id);
+                    if(idx > -1) {
+                        DataStore.state.internships.splice(idx, 1); // Remove
+                        DataStore.save();
+                        RenderEngine.adminDashboard();
+                        utils.notify('Entity Purged from Database.', 'error');
+                    }
+                }
+            },
+
+            // Modal Management
+            modals: {
+                open: (name) => {
+                    document.getElementById(`modal-${name}`).classList.add('active');
+                },
+                close: (name) => {
+                    document.getElementById(`modal-${name}`).classList.remove('active');
+                },
+                openInternship: (id) => {
+                    const intern = DataStore.state.internships.find(i => i.id === id);
+                    if (!intern) return;
+
+                    // Reset Tabs to Trust view initially
+                    app.ui.switchModalTab('trust');
+
+                    document.getElementById('modal-company-name').innerText = intern.company;
+                    document.getElementById('modal-company-logo').innerText = intern.company[0];
+                    document.getElementById('modal-job-title').innerText = intern.title;
+                    document.getElementById('modal-trust-score').innerText = intern.trustScore;
+                    document.getElementById('modal-stipend').innerText = intern.stipend;
+                    document.getElementById('modal-conversion').innerText = intern.conversion;
+
+                    // Update Gauge
+                    const score = intern.trustScore;
+                    const offset = 100 - score;
+                    document.getElementById('modal-gauge-fill').style.strokeDashoffset = offset;
+                    document.getElementById('modal-gauge-fill').style.stroke = utils.calculateRiskLevel(score).color;
+                    
+                    // Wire Apply Button
+                    const btn = document.getElementById('btn-apply-modal');
+                    btn.onclick = () => app.handlers.applyToInternship(id);
+
+                    // --- NEW: TRIGGER READINESS CALCULATION ---
+                    app.readiness.calculate(intern);
+
+                    // --- NEW: SETUP REALITY CHECK ---
+                    app.realityCheck.init(intern);
+
+                    app.modals.open('details');
+                },
+                openReport: () => {
+                    app.modals.close('details'); // Switch modals
+                    app.modals.open('report');
+                }
+            },
+
+            // UI Interaction Helpers
+            ui: {
+                scrollTo: (id) => document.getElementById(id).scrollIntoView(),
+                
+                toggleAuthMode: (mode) => {
+                    const form = document.getElementById('auth-form');
+                    form.setAttribute('data-mode', mode);
+                    document.getElementById('auth-title').innerText = mode === 'login' ? 'Initialize Session' : 'Create New Identity';
+                    document.getElementById('field-email').style.display = mode === 'register' ? 'block' : 'none';
+                    document.getElementById('field-role').style.display = mode === 'register' ? 'block' : 'none';
+                },
+
+                switchDashTab: (tabName) => {
+                    document.querySelectorAll('.dash-menu button').forEach(b => b.classList.remove('active'));
+                    event.target.classList.add('active');
+                    
+                    document.querySelectorAll('.dash-content > div').forEach(d => d.style.display = 'none');
+                    document.getElementById(`tab-${tabName}`).style.display = 'block';
+
+                    if (tabName === 'profile') RenderEngine.studentDashboard();
+                },
+
+                // NEW: MODAL TAB SWITCHER
+                switchModalTab: (tabName) => {
+                     document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+                     // Since this is triggered by click, event.target works, but for programmatic reset we might need manual handling.
+                     // Simple approach:
+                     const buttons = document.querySelectorAll('.modal-tab-btn');
+                     if(tabName === 'trust') buttons[0].classList.add('active');
+                     else if(tabName === 'readiness') buttons[1].classList.add('active');
+                     else buttons[2].classList.add('active'); // Add for reality check safety
+
+                     document.getElementById('modal-section-trust').style.display = tabName === 'trust' ? 'block' : 'none';
+                     document.getElementById('modal-section-readiness').style.display = tabName === 'readiness' ? 'block' : 'none';
+                     // Ensure reality section is hidden if another tab is selected
+                     const realitySec = document.getElementById('modal-section-reality');
+                     if(realitySec) realitySec.style.display = 'none';
+                },
+
+                // TASK 4: Animation Toggle Handler
+                toggleAnimations: (input) => {
+                    app.settings.animationsEnabled = input.checked;
+                    localStorage.setItem('animationsEnabled', input.checked);
+                    if (input.checked) {
+                        document.body.classList.remove('no-animations');
+                        app.ui.initParticles(); // Restart particles
+                    } else {
+                        document.body.classList.add('no-animations');
+                    }
+                },
+
+                // Background Logic
+                initParticles: () => {
+                    // TASK 4: Check setting
+                    if (!app.settings.animationsEnabled) return;
+
+                    const canvas = document.getElementById('particle-canvas');
+                    const ctx = canvas.getContext('2d');
+                    let width, height;
+                    let particles = [];
+
+                    const resize = () => {
+                        width = canvas.width = window.innerWidth;
+                        height = canvas.height = window.innerHeight;
+                    }
+                    window.addEventListener('resize', resize);
+                    resize();
+
+                    for (let i = 0; i < 50; i++) particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 2
+                    });
+
+                    const animate = () => {
+                        if (!app.settings.animationsEnabled) {
+                            ctx.clearRect(0, 0, width, height);
+                            return; // Stop loop
+                        }
+
+                        ctx.clearRect(0, 0, width, height);
+                        particles.forEach(p => {
+                            p.x += p.vx;
+                            p.y += p.vy;
+                            if (p.x < 0 || p.x > width) p.vx *= -1;
+                            if (p.y < 0 || p.y > height) p.vy *= -1;
+                            
+                            ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+                            ctx.beginPath();
+                            ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                            ctx.fill();
+                        });
+                        requestAnimationFrame(animate);
+                    }
+                    animate();
+                }
+            },
+            
+            // Internship Filtering Logic
+            listings: {
+                filter: () => {
+                    const term = document.getElementById('search-input').value;
+                    const risk = document.getElementById('risk-filter').value;
+                    RenderEngine.internshipGrid(risk, term);
+                }
+            },
+
+            // --- NEW: READINESS BRUTALITY ENGINE LOGIC ---
+            readiness: {
+                calculate: (intern) => {
+                    const user = DataStore.state.currentUser;
+                    const container = document.getElementById('readiness-skill-list');
+                    const scoreDisplay = document.getElementById('readiness-score-val');
+                    const verdictDisplay = document.getElementById('readiness-verdict');
+                    
+                    if (!user || !user.skills) {
+                         // Default state for non-logged in or empty profile
+                         container.innerHTML = `<p style="text-align:center; padding: 2rem;">Please LOGIN to activate Neural Skill Analysis.</p>`;
+                         scoreDisplay.innerText = "0%";
+                         return;
+                    }
+
+                    const reqs = intern.skillsReq || {};
+                    let totalMatch = 0;
+                    let count = 0;
+                    let html = '';
+
+                    // Iterate through requirements
+                    for (const [skill, reqValue] of Object.entries(reqs)) {
+                        count++;
+                        const userSkill = user.skills[skill] || 0;
+                        let gap = userSkill - reqValue;
+                        let matchPercent = 100;
+
+                        if (userSkill < reqValue) {
+                            matchPercent = (userSkill / reqValue) * 100;
+                        }
+
+                        totalMatch += matchPercent;
+
+                        // Determine Bar Color Class based on gap
+                        let barClass = '';
+                        if (matchPercent < 50) barClass = 'gap-danger';
+                        else if (matchPercent < 100) barClass = 'gap-warning';
+                        
+                        html += `
+                            <div class="skill-gap-item">
+                                <div class="skill-gap-header">
+                                    <span>${skill} (Req: ${reqValue}%)</span>
+                                    <span>${userSkill}% / ${reqValue}%</span>
+                                </div>
+                                <div class="skill-gap-track">
+                                    <div class="skill-req-marker" style="left: ${reqValue}%"></div>
+                                    <div class="skill-gap-fill ${barClass}" style="width: ${userSkill}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    if (count === 0) {
+                        html = `<p>No specific skill requirements listed.</p>`;
+                        totalMatch = 100; // Default to full match if no reqs
+                    } else {
+                        totalMatch = Math.round(totalMatch / count);
+                    }
+
+                    // Render Stats
+                    container.innerHTML = html;
+                    
+                    // Animate Score
+                    let currentScore = 0;
+                    const interval = setInterval(() => {
+                        currentScore++;
+                        scoreDisplay.innerText = currentScore + "%";
+                        if (currentScore >= totalMatch) clearInterval(interval);
+                    }, 10);
+
+                    // Verdict Logic
+                    let badgeClass = '';
+                    let badgeText = '';
+                    let successProb = '';
+                    let rejectRisk = '';
+
+                    if (totalMatch >= 80) {
+                        badgeClass = 'badge-elite';
+                        badgeText = 'ELITE CANDIDATE';
+                        successProb = 'High (92%)';
+                        rejectRisk = 'Low (<10%)';
+                    } else if (totalMatch >= 50) {
+                        badgeClass = 'badge-mid';
+                        badgeText = 'BALANCED';
+                        successProb = 'Moderate (65%)';
+                        rejectRisk = 'Medium (35%)';
+                    } else {
+                        badgeClass = 'badge-low';
+                        badgeText = 'UNDERQUALIFIED';
+                        successProb = 'Low (<20%)';
+                        rejectRisk = 'Critical (80%)';
+                    }
+
+                    verdictDisplay.innerHTML = `<span class="analysis-badge ${badgeClass}">${badgeText}</span>`;
+                    document.getElementById('readiness-success-prob').innerText = successProb;
+                    document.getElementById('readiness-reject-risk').innerText = rejectRisk;
+                    
+                    // Style score text color
+                    scoreDisplay.style.color = totalMatch >= 80 ? 'var(--color-elite-cyan)' : (totalMatch >= 50 ? 'var(--color-brutal-yellow)' : 'var(--color-brutal-orange)');
+                }
+            },
+
+            // --- ADVANCED COGNITIVE REALITY CHECK ENGINE ---
+            realityCheck: {
+                data: {
+                    userPerceptionScores: {},
+                    realityTestScores: {},
+                    questionBank: {
+                        'React': {
+                            q: "In React, what triggers a re-render by default?",
+                            options: ["Changing a variable", "State or Props change", "Window resize", "CSS change"],
+                            correct: 1
+                        },
+                        'NodeJS': {
+                            q: "Node.js is single-threaded but handles concurrency via:",
+                            options: ["Multiple CPUs", "Event Loop", "Threads pool", "Java threads"],
+                            correct: 1
+                        },
+                        'Design': {
+                            q: "Which principle ensures visual hierarchy?",
+                            options: ["Contrast & Scale", "Flat colors", "Using 1 font", "Symmetry"],
+                            correct: 0
+                        },
+                        'Python': {
+                            q: "What data type is immutable in Python?",
+                            options: ["List", "Dictionary", "Tuple", "Set"],
+                            correct: 2
+                        },
+                        'Security': {
+                            q: "Which vulnerability allows JS execution in a user's browser?",
+                            options: ["SQL Injection", "XSS", "DDoS", "Phishing"],
+                            correct: 1
+                        },
+                        'Data': {
+                            q: "A Left Join returns:",
+                            options: ["Only matching rows", "All left + matching right", "All rows", "Matching + nulls"],
+                            correct: 1
+                        }
+                    }
+                },
+
+                init: (intern) => {
+                    app.realityCheck.data.userPerceptionScores = {};
+                    app.realityCheck.data.realityTestScores = {};
+                    app.realityCheck.renderUI(intern);
+                },
+
+                switchToRealityTab: () => {
+                    document.querySelectorAll('.modal-tab-btn').forEach(b => b.classList.remove('active'));
+                    // Assuming 3rd button is reality check based on HTML order
+                    const buttons = document.querySelectorAll('.modal-tab-btn');
+                    if(buttons[2]) buttons[2].classList.add('active');
+
+                    document.getElementById('modal-section-trust').style.display = 'none';
+                    document.getElementById('modal-section-readiness').style.display = 'none';
+                    document.getElementById('modal-section-reality').style.display = 'block';
+                },
+
+                renderUI: (intern) => {
+                    const container = document.getElementById('modal-section-reality');
+                    const skills = Object.keys(intern.skillsReq || {});
+                    const user = DataStore.state.currentUser;
+
+                    if (!user) {
+                        container.innerHTML = `<p style="text-align:center; padding: 2rem;">Please LOGIN to perform Cognitive Reality Check.</p>`;
+                        return;
+                    }
+
+                    if (skills.length === 0) {
+                        container.innerHTML = `<p style="text-align:center; padding: 2rem;">No specific skills defined for reality check.</p>`;
+                        return;
+                    }
+
+                    let html = `
+                        <h4 class="section-subtitle-neon">Phase 1: Perceived Competence Analysis</h4>
+                        <p style="font-size:0.8rem; color:#aaa; margin-bottom:1rem;">Adjust sliders to reflect your confidence level honestly.</p>
+                        <div class="reality-sliders">`;
+
+                    skills.forEach(skill => {
+                        html += `
+                            <div class="reality-slider-container">
+                                <div class="reality-slider-label">
+                                    <span>${skill}</span>
+                                    <span id="perception-val-${skill}">50%</span>
+                                </div>
+                                <input type="range" min="0" max="100" value="50" class="reality-slider" 
+                                    oninput="app.realityCheck.updatePerception('${skill}', this.value)">
+                            </div>
+                        `;
+                        app.realityCheck.data.userPerceptionScores[skill] = 50; // Default
+                    });
+
+                    html += `</div>
+                        <h4 class="section-subtitle-neon" style="margin-top:2rem;">Phase 2: Logic Validation Protocol</h4>
+                        <div class="reality-quiz">`;
+
+                    skills.forEach(skill => {
+                        const qData = app.realityCheck.data.questionBank[skill];
+                        if (qData) {
+                            html += `
+                                <div class="quiz-card" id="quiz-card-${skill}">
+                                    <div class="quiz-question"><strong>${skill}:</strong> ${qData.q}</div>
+                                    <div class="quiz-options">
+                                        ${qData.options.map((opt, idx) => `
+                                            <button class="quiz-btn" onclick="app.realityCheck.selectAnswer('${skill}', ${idx}, this)">${opt}</button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    });
+
+                    html += `</div>
+                        <button class="reality-action-btn" onclick="app.realityCheck.revealCognitiveGap('${intern.id}')">Reveal Cognitive Gap</button>
+                        <div id="reality-results-area"></div>
+                    `;
+
+                    container.innerHTML = html;
+                },
+
+                updatePerception: (skill, value) => {
+                    app.realityCheck.data.userPerceptionScores[skill] = parseInt(value);
+                    document.getElementById(`perception-val-${skill}`).innerText = value + '%';
+                },
+
+                selectAnswer: (skill, idx, btnElement) => {
+                    // Visual Selection
+                    const parent = document.getElementById(`quiz-card-${skill}`);
+                    parent.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('selected'));
+                    btnElement.classList.add('selected');
+
+                    // Scoring Logic
+                    const qData = app.realityCheck.data.questionBank[skill];
+                    const score = (idx === qData.correct) ? 85 : 25;
+                    app.realityCheck.data.realityTestScores[skill] = score;
+                },
+
+                revealCognitiveGap: (internId) => {
+                    const intern = DataStore.state.internships.find(i => i.id === internId);
+                    const skills = Object.keys(intern.skillsReq || {});
+                    const perception = app.realityCheck.data.userPerceptionScores;
+                    const reality = app.realityCheck.data.realityTestScores;
+                    
+                    let totalPerception = 0;
+                    let totalReality = 0;
+                    let count = 0;
+                    let barsHtml = '';
+                    let skillGaps = [];
+
+                    skills.forEach(skill => {
+                        if (app.realityCheck.data.questionBank[skill]) {
+                            const pScore = perception[skill] || 50;
+                            const rScore = reality[skill] || 0; // 0 if not answered (penalty)
+                            
+                            totalPerception += pScore;
+                            totalReality += rScore;
+                            count++;
+
+                            barsHtml += `
+                                <div class="dual-bar-container">
+                                    <div class="dual-bar-label">
+                                        <span>${skill}</span>
+                                        <span style="font-size:0.7rem; color:#aaa;">P: ${pScore}% | R: ${rScore}%</span>
+                                    </div>
+                                    <div class="dual-bar-track">
+                                        <div class="bar-perception" style="width:${pScore}%"></div>
+                                        <div class="bar-reality" style="width:${rScore}%"></div>
+                                    </div>
+                                </div>
+                            `;
+
+                            if (rScore < 50) skillGaps.push({ skill, pScore, rScore });
+                        }
+                    });
+
+                    if (count === 0) return;
+
+                    const avgPerception = Math.round(totalPerception / count);
+                    const avgReality = Math.round(totalReality / count);
+                    const illusionGap = avgPerception - avgReality;
+
+                    // Determine Alert
+                    let alertClass = '';
+                    let alertMsg = '';
+                    
+                    if (illusionGap > 15) {
+                        alertClass = 'alert-red';
+                        alertMsg = "Overconfidence Detected – High Interview Risk";
+                    } else if (illusionGap < -15) {
+                        alertClass = 'alert-yellow';
+                        alertMsg = "Underconfidence Detected – Imposter Pattern";
+                    } else {
+                        alertClass = 'alert-green';
+                        alertMsg = "Cognitive Alignment Achieved";
+                    }
+
+                    // Roadmap
+                    skillGaps.sort((a,b) => a.rScore - b.rScore);
+                    const weakest = skillGaps.slice(0, 2);
+                    let roadmapHtml = '';
+                    
+                    const suggestions = {
+                        'React': "Deep dive into hooks & component lifecycle.",
+                        'NodeJS': "Practice event loop & async flows.",
+                        'Design': "Study spacing, typography & color theory.",
+                        'Python': "Master list comprehensions & decorators.",
+                        'Security': "Review OWASP Top 10 vulnerabilities.",
+                        'Data': "Practice complex SQL joins & normalization."
+                    };
+
+                    weakest.forEach(item => {
+                        roadmapHtml += `
+                            <div class="roadmap-item">
+                                <div class="roadmap-skill">${item.skill} (Reality: ${item.rScore}%)</div>
+                                <div class="roadmap-task">${suggestions[item.skill] || "Review core concepts."}</div>
+                            </div>
+                        `;
+                    });
+
+                    const resultsHtml = `
+                        <div class="illusion-dashboard">
+                            <div class="illusion-metrics">
+                                <div class="illusion-metric">
+                                    <div class="illusion-val val-perception">${avgPerception}%</div>
+                                    <div class="illusion-label">Perceived</div>
+                                </div>
+                                <div class="illusion-metric">
+                                    <div class="illusion-val val-reality">${avgReality}%</div>
+                                    <div class="illusion-label">Actual</div>
+                                </div>
+                            </div>
+                            <div class="illusion-alert ${alertClass}">${alertMsg}</div>
+                        </div>
+                        <h4 class="section-subtitle-neon">Skill Reality Map</h4>
+                        ${barsHtml}
+                        
+                        <h4 class="section-subtitle-neon" style="margin-top:2rem;">Auto-Generated Roadmap</h4>
+                        <div class="roadmap-timeline">
+                            ${roadmapHtml || '<p style="color:#aaa;">No major gaps detected. Maintain current trajectory.</p>'}
+                        </div>
+                    `;
+
+                    const resultArea = document.getElementById('reality-results-area');
+                    resultArea.innerHTML = resultsHtml;
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                }
+            },
+
+            // TASK 4: GLOBAL SETTINGS
+            settings: {
+                animationsEnabled: true
+            }
+        };
+
+        // Boot
+        document.addEventListener('DOMContentLoaded', app.init);
+
+    </script>
+</body>
+</html> 
